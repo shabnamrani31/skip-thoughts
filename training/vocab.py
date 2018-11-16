@@ -1,10 +1,12 @@
 """
 Constructing and loading dictionaries
 """
-import cPickle as pkl
+import glob
+import _pickle as pkl
 import numpy
 from collections import OrderedDict
-
+text=glob.glob('C:/Users/Hp 15/Desktop/desktop/new/'+"*.txt")
+#text=['hellooooooooooo', 'tooooooooooooooooooogggggg', 'okoko','ijiji']
 def build_dictionary(text):
     """
     Build a dictionary
@@ -17,7 +19,7 @@ def build_dictionary(text):
             if w not in wordcount:
                 wordcount[w] = 0
             wordcount[w] += 1
-    words = wordcount.keys()
+    words = list(wordcount.keys())[0]
     freqs = wordcount.values()
     sorted_idx = numpy.argsort(freqs)[::-1]
 
@@ -27,12 +29,15 @@ def build_dictionary(text):
 
     return worddict, wordcount
 
-def load_dictionary(loc='/ais/gobi3/u/rkiros/bookgen/book_dictionary_large.pkl'):
+def load_dictionary(loc='C:/Users/Hp 15/Desktop/vocab/vocab.txt'):
     """
     Load a dictionary
     """
-    with open(loc, 'rb') as f:
-        worddict = pkl.load(f)
+    print ("Done fffffffffffffffffffff")
+    file = open('C:/Users/Hp 15/Desktop/vocab/vocab.txt', "r") 
+    worddict =file.read()
+#    with open(loc, 'rb') as f:
+#        worddict = pkl.load(f)
     return worddict
 
 def save_dictionary(worddict, wordcount, loc):
@@ -43,4 +48,10 @@ def save_dictionary(worddict, wordcount, loc):
         pkl.dump(worddict, f)
         pkl.dump(wordcount, f)
 
-
+if __name__ == "__main__":
+    X=glob.glob('C:/Users/Hp 15/Desktop/desktop/new/'+"*.txt")
+    worddict, wordcount = build_dictionary(X)
+    
+    save_dictionary(worddict, wordcount, loc='C:/Users/Hp 15/Desktop/desktop/opcodes/22.txt')
+    
+    load_dictionary(loc='C:/Users/Hp 15/Desktop/desktop/opcodes/22.txt')
